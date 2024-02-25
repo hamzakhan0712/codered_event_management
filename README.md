@@ -19,10 +19,10 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-### FOR ADMIN SITE LOGIN
+### For Admin Site Login create super user :
 
 python manage.py createsuperuser
 
-### THEN RUN THE PORJECT WITH THIS : 
+### Run the server locally by this : 
 
 python manage.py runserver
