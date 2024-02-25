@@ -30,5 +30,5 @@ python manage.py runserver
 
 ### Video Of Project
 
-[Link to Google Drive File](https://drive.google.com/file/d/1THCpBmQGPMqSMNa672CS8WTepoWDQVm3/view?usp=drive_link)
+[Link to Project Video ](https://drive.google.com/file/d/1THCpBmQGPMqSMNa672CS8WTepoWDQVm3/view?usp=drive_link)
 
