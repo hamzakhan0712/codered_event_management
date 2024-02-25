@@ -3,7 +3,7 @@
 {% block title %}Event List{% endblock %}
 
 {% block content %}
-<div class="row scrollable-row">
+<div class="row ">
   {% for event in events %} {% if event.approval_status == 'ongoing' %}
   <div class="event-card">
     <div class="photo-slider">
