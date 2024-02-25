@@ -1,0 +1,130 @@
+.committee-detail-row {
+  display: flex;
+  gap: 20px;
+}
+
+.left-part {
+  flex: 1;
+  width: 70%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.right-part {
+  flex: 1;
+  padding: 20px;
+}
+
+
+.form-container {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+
+.form-group {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+
+label {
+  font-weight: bold;
+}
+
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+
+
+.card-img-top {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+
+.committee-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.committee-info p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.committee-members h2,
+.pending-events h2 {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.committee-members ul,
+.pending-events ul {
+  list-style: none;
+  padding: 0;
+}
+
+.committee-members ul li,
+.pending-events ul li {
+  margin-bottom: 8px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.actions a:hover {
+  background-color: #0056b3;
+}

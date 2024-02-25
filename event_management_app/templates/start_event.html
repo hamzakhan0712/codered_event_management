@@ -1,0 +1,11 @@
+{% extends 'base.html' %} 
+
+{% block title %}Start Event{% endblock %} 
+
+{% block content %}
+<h2>Start Event</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Start Event</button>
+</form>
+{% endblock %}

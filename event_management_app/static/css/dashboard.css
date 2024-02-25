@@ -1,0 +1,169 @@
+.dashboard-content {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.event-list {
+    flex: 1;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+
+.committee-slider {
+    overflow: hidden;
+    flex: 1;
+    width: 100%;
+    margin: auto;
+}
+
+.committee-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+    margin: 0 auto;
+}
+
+.committee-card {
+    display: flex;
+    background-color: #ccc;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+    width: 100%;
+    margin: auto;
+}
+
+
+.committee-slider {
+    overflow: hidden;
+    margin-top: 0;
+}
+
+
+.committee-slider::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.committee-profile-image {
+    max-width: max-content;
+    max-height: 400px;
+    object-fit: contain;
+    margin: auto;
+
+}
+
+.card-body {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.card-title {
+    margin: 0;
+}
+
+.small-title {
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #007bff;
+}
+
+.committee-meta {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    margin-top: 15px;
+    align-self: flex-end;
+}
+
+
+
+
+
+.event-list {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 20px;
+}
+
+
+.scrollable-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+
+
+.event-card {
+    flex: 0 0 auto;
+    min-width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.photo-slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-slider img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+.event-details {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.event-title {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.event-description {
+    margin-top: 10px;
+    color: #666;
+}
+
+.event-meta {
+    margin: 5px 0;
+    color: #999;
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 10px;
+    margin-right: auto;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}

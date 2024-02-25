@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}Committee dashboard{% endblock %} 
+
+{% block content %}
+<div class="committee-detail-row">
+  <div class="left-part">
+    <img
+      src="{{ committee.profile_image.url }}"
+      class="card-img-top"
+      alt="Committee Image"
+    />
+    <div class="committee-info">
+      <h2 class="card-title"><strong>Name:</strong>{{ committee.name }}</h2>
+      <p class="card-text">
+        <strong>About:</strong> {{ committee.description }}
+      </p>
+      <p class="card-text">
+        <strong>College Name:</strong> {{ committee.college_name }}
+      </p>
+      <p class="card-text">
+        <strong>Created by:</strong> {{ committee.created_by }}
+      </p>
+      <p class="card-text">
+        <strong>Formed On:</strong> {{ committee.created_at }}
+      </p>
+    </div>
+    <div class="committee-members">
+      <h2>Members</h2>
+      <ul>
+        {% for member in committee.members.all %}
+        <li>{{ member.username }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if user.is_authenticated and user in committee.members.all %}
+
+    <div class="pending-events">
+      <h2>Pending Events</h2>
+      <ul>
+        {% for event in pending_events %}
+        <li>{{ event.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="actions">
+      <a href="{% url 'committee_update' committee.pk %}">Update</a>
+      <a href="{% url 'committee_delete' committee.pk %}">Delete</a>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if user.is_authenticated and user in committee.members.all %}
+  <div class="right-part form-container">
+    <h2>Create Proposal</h2>
+
+    <form method="post" enctype="multipart/form-data" action="/create_event/">
+      {% csrf_token %}
+      <input
+        type="hidden"
+        value="{{committee.id}}"
+        id="committee_id"
+        name="committee_id"
+      />
+      <div class="form-group">
+        <label for="event_name">Event Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="event_name"
+          name="name"
+          placeholder="Event Name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="event_description">Event Description:</label>
+        <textarea
+          class="form-control"
+          id="event_description"
+          name="description"
+          placeholder="Event Description"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="launch_date">Launch Date:</label>
+        <input
+          type="date"
+          class="form-control"
+          id="launch_date"
+          name="launch_date"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="venue">Venue:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="venue"
+          name="venue"
+          placeholder="Event Venue"
+        />
+      </div>
+      <div class="form-group">
+        <label for="search_user">Search User:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="search_user"
+          placeholder="Search for users"
+        />
+        <div id="search_results"></div>
+      </div>
+      <div class="form-group">
+        <label for="selected_members">Selected Members:</label>
+        <ul id="selected_members_list"></ul>
+      </div>
+      <div class="form-group">
+        <label for="document">Document:</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="document"
+          name="document"
+        />
+      </div>
+      <div class="form-group">
+        <label for="video_file">Upload Video:</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="video_file"
+          name="video_file"
+        />
+      </div>
+      <div class="form-group">
+        <label for="photo_file">Upload Photo:</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="photo_file"
+          name="photo_file"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+  </div>
+  {% endif %}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var selectedMembers = [];
+
+      $("#search_user").on("input", function () {
+        var query = $(this).val();
+        if (query.length >= 2) {
+          $.ajax({
+            url: "/search-users/",
+            method: "GET",
+            data: { q: query },
+            success: function (data) {
+              $("#search_results").empty();
+              $.each(data, function (index, user) {
+                if (!selectedMembers.includes(user.id)) {
+                  var listItem = $(
+                    '<div class="user-item">' +
+                      user.text +
+                      '<button class="btn btn-sm btn-success add-member-btn" data-user-id="' +
+                      user.id +
+                      '"> Add</button></div>'
+                  );
+                  $("#search_results").append(listItem);
+                }
+              });
+            },
+          });
+        }
+      });
+
+      $(document).on("click", ".add-member-btn", function () {
+        var userId = $(this).data("user-id");
+        var username = $(this).parent().text().trim();
+        if (!selectedMembers.includes(userId)) {
+          // Check if the user ID is not already in the list
+          selectedMembers.push(userId); // Add the user ID to the list of selected members
+          var listItem = $(
+            "<li>" +
+              username +
+              '<input type="hidden" name="members[]" value="' +
+              userId +
+              '"><button class="btn btn-sm btn-danger remove-member-btn" data-user-id="' +
+              userId +
+              '">Remove</button></li>'
+          );
+          $("#selected_members_list").append(listItem);
+        }
+        $(this).parent().remove(); // Remove the selected member from the search results
+      });
+
+      $(document).on("click", ".remove-member-btn", function () {
+        var userId = $(this).data("user-id");
+        var index = selectedMembers.indexOf(userId);
+        if (index !== -1) {
+          selectedMembers.splice(index, 1); // Remove the user ID from the list of selected members
+        }
+        $(this).parent().remove();
+      });
+    });
+  </script>
+</div>
+{% endblock %}

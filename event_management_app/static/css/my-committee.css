@@ -1,0 +1,112 @@
+ Reset def
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .committee-container {
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .committee-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .committee-col {
+    flex: 0 0 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+  }
+
+  .card {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 10px;
+  }
+  
+
+  .card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    background-color: #ddd;
+  }
+  
+
+  .card-body {
+    padding: 20px;
+  }
+  
+  
+  .card-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+
+  .card-text {
+    margin-bottom: 10px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  .event-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+   St
+  .event-card {
+    margin-bottom: 20px;
+  }
+  
+  
+  .event-info {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+   
+  .event-info h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+   
+  .event-info p {
+    margin-bottom: 8px;
+  }
+  
+ 

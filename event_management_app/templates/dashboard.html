@@ -1,0 +1,133 @@
+{% extends 'base.html' %} 
+
+{% block title %}InitCore{% endblock %} 
+
+
+{% block content %}
+
+<div class="dashboard-content">
+  <div class="committee-slider">
+    <div class="committee-list">
+      {% for committee in committees %}
+      <div class="committee-card">
+        <img
+          src="{{ committee.profile_image.url }}"
+          alt="Profile Image"
+          class="committee-profile-image"
+        />
+        <div class="card-body">
+          <h2 class="card-title">
+            {{ committee.name }} -
+            <span class="small-title">{{ committee.college_name }}</span>
+          </h2>
+          <p class="committee-description">{{ committee.description }}</p>
+          <div class="committee-meta">
+            <p class="committee-created-by">
+              Organized by - {{ committee.created_by.username }}
+            </p>
+            <p class="committee-created-at">{{ committee.created_at|date }}</p>
+          </div>
+          <a
+            href="{% url 'committee_detail' committee.id %}"
+            class="btn btn-primary"
+            >View Committee</a
+          >
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="event-list">
+    <div class="row">
+      {% for event in events %} {% if event.approval_status == 'ongoing' %}
+      <div class="event-card">
+        <div class="photo-slider">
+          {% for photo in event.photos.all %}
+          <img
+            src="{{ photo.photo_file.url }}"
+            alt="Event Photo"
+            class="event-photo"
+          />
+          {% endfor %}
+        </div>
+        <div class="event-details">
+          <h2 class="event-title">
+            {{ event.name }} -
+            <span class="small-title">{{event.approval_status}}</span>
+          </h2>
+          <p class="event-description">{{ event.description }}</p>
+          <p class="event-meta">Committee: {{ event.committee.name }}</p>
+          <p class="event-meta">Launch Date: {{ event.launch_date }}</p>
+          <p class="event-meta">Venue: {{ event.venue }}</p>
+          <a href="{% url 'event_details' event.id %}" class="btn btn-primary"
+            >View Event</a
+          >
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+
+    <div class="row scrollable-row">
+      {% for event in events %} {% if event.approval_status == 'pending' %}
+      <div class="event-card">
+        <div class="photo-slider">
+          {% for photo in event.photos.all %}
+          <img
+            src="{{ photo.photo_file.url }}"
+            alt="Event Photo"
+            class="event-photo"
+          />
+          {% endfor %}
+        </div>
+        <div class="event-details">
+          <h2 class="event-title">
+            {{ event.name }} -
+            <span class="small-title">{{event.approval_status}}</span>
+          </h2>
+          <p class="event-description">{{ event.description }}</p>
+          <p class="event-meta">Committee: {{ event.committee.name }}</p>
+          <p class="event-meta">Launch Date: {{ event.launch_date }}</p>
+          <p class="event-meta">Venue: {{ event.venue }}</p>
+          <a href="{% url 'event_details' event.id %}" class="btn btn-primary"
+            >View Event</a
+          >
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function slideCommittees() {
+    const committeeList = document.querySelector(".committee-list");
+    const firstCommittee = committeeList.firstElementChild;
+    committeeList.style.transition = "transform 0.5s ease-in-out";
+    committeeList.style.transform =
+      "translateX(-" + firstCommittee.offsetWidth + "px)";
+    setTimeout(function () {
+      committeeList.appendChild(firstCommittee);
+      committeeList.style.transition = "none";
+      committeeList.style.transform = "translateX(0)";
+    }, 500);
+  }
+
+  setInterval(slideCommittees, 8000);
+
+  $(document).ready(function () {
+    $(".photo-slider").each(function () {
+      var $this = $(this);
+      var $photos = $this.find("img");
+      var currentIndex = 0;
+
+      setInterval(function () {
+        $photos.eq(currentIndex).fadeOut(1000);
+        currentIndex = (currentIndex + 1) % $photos.length;
+        $photos.eq(currentIndex).fadeIn(1000);
+      }, 3000);
+    });
+  });
+</script>
+
+{% endblock %}

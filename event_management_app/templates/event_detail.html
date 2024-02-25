@@ -1,0 +1,65 @@
+{% extends 'base.html' %} 
+{% block title %}Event Detail{% endblock %} 
+
+{% block content %}
+<div class="row">
+  {% if request.user in event.committee.members.all %}
+  <div class="approval-timeline-container">
+    <div class="approval-timeline">
+      {% for member in event.selected_members.all %} {% if member in event.launch_approved_members.all %}
+      <div class="approval-circle green">{{ member.username }}</div>
+      {% else %}
+      <div class="approval-circle red">{{ member.username }}</div>
+      {% endif %} {% endfor %}
+    </div>
+    <div class="approval-count-line">
+      {% with total_selected_members=event.selected_members.count %} 
+      {% with total_approved_members=event.launch_approved_members.count %} Approved By:
+      {{ total_approved_members }} / {{ total_selected_members }} {% endwith %}
+      {% endwith %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="event-details-container">
+    <h3><a href="{% url 'event_details' event.id %}">{{ event.name }}</a></h3>
+    <p><strong>Committee:</strong> {{ event.committee.name }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Launch Date:</strong> {{ event.launch_date }}</p>
+    <p><strong>Venue:</strong> {{ event.venue }}</p>
+    <p><strong>Initiator:</strong> {{ event.initiator.username }}</p>
+    <p><strong>Approval Status:</strong> {{ event.approval_status }}</p>
+    {% if event.document %}
+    <a href="{{ event.document.url }}" class="btn btn-primary" target="_blank"
+      >Download Document</a
+    >
+    {% endif %} 
+    
+    {% if user in event.committee.members.all and user not in event.launch_approved_members.all %}
+    <form
+      method="post"
+      action="{% url 'update_document' event.id %}"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="document">Upload New Document:</label>
+        <input
+          type="file"
+          class="form-control-file"
+          id="document"
+          name="document"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Upload Document</button>
+    </form>
+  {% if event.approval_status == 'pending' %}
+    <form method="post" action="{% url 'approve_event' event.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success">Approve</button>
+    </form>
+    {% endif %} 
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

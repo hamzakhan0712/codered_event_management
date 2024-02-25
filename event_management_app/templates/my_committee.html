@@ -1,0 +1,81 @@
+{% extends 'base.html' %} 
+
+{% block title %}Manage{% endblock %} 
+
+
+{% block content %}
+<h1>My Committees</h1>
+<div class="committee-container">
+  <div class="committee-row">
+    {% for committee in committees %}
+    <div class="committee-col">
+      <div class="card">
+        <img
+          src="{{ committee.profile_image.url }}"
+          class="card-img-top"
+          alt="Committee Image"
+        />
+        <div class="card-body">
+          <h2 class="card-title"><strong>Name:</strong>{{ committee.name }}</h2>
+          <p class="card-text">
+            <strong>About:</strong> {{ committee.description }}
+          </p>
+          <p class="card-text">
+            <strong>College Name:</strong> {{ committee.college_name }}
+          </p>
+          <p class="card-text">
+            <strong>Created by:</strong> {{ committee.created_by }}
+          </p>
+          <p class="card-text">
+            <strong>Formed On:</strong> {{ committee.created_at }}
+          </p>
+          <a
+            href="{% url 'committee_detail' committee.pk %}"
+            class="btn btn-primary"
+            >Commit dashboard</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<h2>All My Events</h2>
+<ul class="event-list">
+  {% for event in pending_events %}
+  <li class="event-card">
+    <div class="event-info">
+      <h3><a href="{% url 'event_details' event.id %}">{{ event.name }}</a></h3>
+      <p><strong>Committee:</strong> {{ event.committee.name }}</p>
+      <p><strong>Description:</strong> {{ event.description }}</p>
+      <p><strong>Launch Date:</strong> {{ event.launch_date }}</p>
+      <p><strong>Venue:</strong> {{ event.venue }}</p>
+      <p><strong>Initiator:</strong> {{ event.initiator.username }}</p>
+      <p><strong>Approval Status:</strong> {{ event.approval_status }}</p>
+    </div>
+  </li>
+  {% empty %}
+  <li>No pending events found.</li>
+  {% endfor %}
+</ul>
+
+<h2>Approval Events</h2>
+<ul>
+  {% for event in approval_events %}
+  <li class="event-card">
+    <div class="event-info">
+      <h3><a href="{% url 'event_details' event.id %}">{{ event.name }}</a></h3>
+      <p><strong>Committee:</strong> {{ event.committee.name }}</p>
+      <p><strong>Description:</strong> {{ event.description }}</p>
+      <p><strong>Launch Date:</strong> {{ event.launch_date }}</p>
+      <p><strong>Venue:</strong> {{ event.venue }}</p>
+      <p><strong>Initiator:</strong> {{ event.initiator.username }}</p>
+      <p><strong>Approval Status:</strong> {{ event.approval_status }}</p>
+    </div>
+  </li>
+  {% empty %}
+  <li>No pending events found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

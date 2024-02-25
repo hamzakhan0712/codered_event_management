@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Committee Dashboard{% endblock %} 
+
+{% block content %}
+<style>
+  /* Add CSS styles as needed */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+
+  .create-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  .committee-list {
+    margin-top: 20px;
+  }
+
+  .committee {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .committee-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .view-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+</style>
+
+<div class="header">
+  <h1>Committee Dashboard</h1>
+  {% if user.is_authenticated %}
+  <a href="{% url 'create_committee' %}" class="create-button"
+    >Create Committee</a
+  >
+  {% endif %}
+</div>
+
+<div class="committee-list">
+  <div class="row" style="display: flex; gap: 1rem">
+    {% for committee in committees %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img
+          src="{{ committee.profile_image.url }}"
+          class="card-img-top"
+          alt="Committee Image"
+          style="width: 120px"
+        />
+        <div class="card-body">
+          <h2 class="card-title"><strong>Name:</strong>{{ committee.name }}</h2>
+          <p class="card-text">
+            <strong>About:</strong> {{ committee.description }}
+          </p>
+          <p class="card-text">
+            <strong>College Name:</strong> {{ committee.college_name }}
+          </p>
+          <p class="card-text">
+            <strong>Created by:</strong> {{ committee.created_by }}
+          </p>
+          <p class="card-text">
+            <strong>Formed On:</strong> {{ committee.created_at }}
+          </p>
+          <a
+            href="{% url 'committee_detail' committee.pk %}"
+            class="btn btn-primary"
+            >View Details</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

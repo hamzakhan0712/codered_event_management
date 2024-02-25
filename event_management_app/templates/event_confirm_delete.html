@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+
+{% block title %}Confirm Event Deletion{% endblock %}
+
+
+{% block content %}
+
+<h2>Confirm Event Deletion</h2>
+<p>Are you sure you want to delete "{{ event.name }}" event?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+</form>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<form method="post" id="committee-form" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_name">Name:</label>
+    <input type="text" class="form-control" id="id_name" name="name" required />
+  </div>
+  <div class="form-group">
+    <label for="id_description">Description:</label>
+    <textarea
+      class="form-control"
+      id="id_description"
+      name="description"
+      required
+    ></textarea>
+  </div>
+  <div class="form-group">
+    <label for="id_college_name">College Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="id_college_name"
+      name="college_name"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="committee_image">Committee Image:</label>
+    <input
+      type="file"
+      class="form-control-file"
+      id="committee_image"
+      name="profile_image"
+    />
+    <img
+      id="image_preview"
+      src="#"
+      alt="Preview"
+      style="display: none; max-width: 100px; max-height: 100px"
+    />
+  </div>
+  <div class="form-group">
+    <label for="search_user">Search User:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="search_user"
+      placeholder="Search for users"
+    />
+    <div id="search_results"></div>
+  </div>
+  <div class="form-group">
+    <label for="selected_members">Selected Members:</label>
+    <ul id="selected_members_list"></ul>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var selectedMembers = [];
+
+    $("#search_user").on("input", function () {
+      var query = $(this).val();
+      if (query.length >= 2) {
+        $.ajax({
+          url: "/search-users/",
+          method: "GET",
+          data: { q: query },
+          success: function (data) {
+            $("#search_results").empty();
+            $.each(data, function (index, user) {
+              if (!selectedMembers.includes(user.id)) {
+                var listItem = $(
+                  '<div class="user-item">' +
+                    user.text +
+                    '<button class="btn btn-sm btn-success add-member-btn" data-user-id="' +
+                    user.id +
+                    '"> Add</button></div>'
+                );
+                $("#search_results").append(listItem);
+              }
+            });
+          },
+        });
+      }
+    });
+
+    $(document).on("click", ".add-member-btn", function () {
+      var userId = $(this).data("user-id");
+      var username = $(this).parent().text().trim();
+      if (!selectedMembers.includes(userId)) {
+        selectedMembers.push(userId);
+        var listItem = $(
+          "<li>" +
+            username +
+            '<input type="hidden" name="members[]" value="' +
+            userId +
+            '"><button class="btn btn-sm btn-danger remove-member-btn" data-user-id="' +
+            userId +
+            '">Remove</button></li>'
+        );
+        $("#selected_members_list").append(listItem);
+      }
+      $(this).parent().remove();
+    });
+
+    $(document).on("click", ".remove-member-btn", function () {
+      var userId = $(this).data("user-id");
+      var index = selectedMembers.indexOf(userId);
+      if (index !== -1) {
+        selectedMembers.splice(index, 1);
+      }
+      $(this).parent().remove();
+    });
+
+    $("#committee_image").change(function () {
+      readURL(this);
+    });
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#image_preview").attr("src", e.target.result);
+          $("#image_preview").show();
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  });
+</script>
+
+{% endblock %}

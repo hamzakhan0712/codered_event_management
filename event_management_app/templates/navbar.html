@@ -1,0 +1,44 @@
+{% load static %}
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <a class="navbar-left navbar-a" href="{% url 'dashboard' %}">
+      <div class="navbar-logo">
+        <img src="{% static 'img/icon.png' %}" alt="Logo" />
+      </div>
+      <div class="navbar-brand">InitCore</div>
+    </a>
+  </div>
+
+  <div class="navbar-middle">
+    <ul class="navbar-nav">
+      <li><a class="navbar-a" href="{% url 'event_list' %}">Events</a></li>
+      <li>
+        <a class="navbar-a" href="{% url 'committee_dashboard' %}"
+          >Committees</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="navbar-right">
+    <ul class="navbar-nav">
+      {% if user.is_authenticated %}
+      <li>
+        <p style="font-size: 18px; text-transform: capitalize">
+          {{user.first_name}} {{user.last_name}}
+        </p>
+      </li>
+      <li><a class="navbar-a" href="{% url 'my_committee' %}">Manage</a></li>
+      <li>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+      {% else %}
+      <li><a class="navbar-a" href="{% url 'login' %}">Login</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
