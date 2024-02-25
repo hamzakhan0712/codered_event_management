@@ -26,3 +26,8 @@ python manage.py createsuperuser
 ### Run the server locally by this : 
 
 python manage.py runserver
+
+
+### Video Of Project
+
+https://drive.google.com/file/d/1THCpBmQGPMqSMNa672CS8WTepoWDQVm3/view?usp=drive_link
