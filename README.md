@@ -11,7 +11,7 @@ This is a Django-based event management website where users can view, create, an
 
 ## Installation
 
-# Clone the repository and run the below commands:
+### Clone the repository and run the below commands:
 
 pip install -r requirements.txt
 
@@ -19,10 +19,10 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-# FOR ADMIN SITE LOGIN
+### FOR ADMIN SITE LOGIN
 
 python manage.py createsuperuser
 
-# THEN RUN THE PORJECT WITH THIS : 
+### THEN RUN THE PORJECT WITH THIS : 
 
 python manage.py runserver
