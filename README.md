@@ -18,3 +18,11 @@ pip install -r requirements.txt
 python manage.py makemigrations
 
 python manage.py migrate
+
+## FOR ADMIN SITE LOGIN
+
+python manage.py createsuperuser
+
+## THEN RUN THE PORJECT WITH THIS : 
+
+python manage.py runserver
